@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>끝말잇기</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+                <div>{{word}}</div>
+            <form v-on:submit="onSubmitForm">
+                <input type="text" ref="answer" v-model="value">
+                <button type="submit">입력</button>
+            </form>
+            <div>{{result}}</div>
+        </div>
+        <script>
+            const app = new Vue({
+                el: '#root',
+                data: {
+                    word: '사과',
+                    result: '',
+                    value: '',
+                },
+                methods: {
+                    onSubmitForm(e) {
+                        e.preventDefault();
+                        if (this.value.length === 1) {
+                            this.result = '두 글자 이상 입력하세요.';
+                            this.value = '';
+                            this.$refs.answer.focus();
+                        } else if (this.word[this.word.length - 1] === this.value[0]) {
+                            this.result = '정답!';
+                            this.word = this.value;
+                            this.value = '';
+                            this.$refs.answer.focus();
+                        } else {
+                            this.result = '오답';
+                            this.value = '';
+                            this.$refs.answer.focus();
+                        }
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
